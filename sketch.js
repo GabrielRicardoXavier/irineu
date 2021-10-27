@@ -9,6 +9,8 @@ var cactinhos,nuvinhas;
 var restart,gameOver;
 var imageDoRestart,imagemDoGameOver;
 var pulin,faliceu,checkPoint;
+var larguraTela = window.innerWidth
+
 
 function reset(){
   pontinhos = 0;
@@ -28,9 +30,9 @@ function reset(){
 function cactinho(){
   
   if(frameCount % 60 === 0){
-    var cacto = createSprite(600,170,10,40);
+    var cacto = createSprite(larguraTela,170,10,40);
     cacto.velocityX = -(5+pontinhos/100);
-    cacto.lifetime = 125;
+    cacto.lifetime = larguraTela;
     cacto.scale = 0.6;
     cacto.depth = trex.depth;
     trex.depth = trex.depth + 1;
@@ -59,7 +61,7 @@ function cactinho(){
 function nuvinha(){
   
   if(frameCount % 60 === 0){
-    var nuvem = createSprite(600,10,40,10);
+    var nuvem = createSprite(larguraTela,10,40,10);
     nuvem.velocityX = -5;
     nuvem.addImage(nuvemImagem);
     nuvem.y = Math.round(random(70,180));
@@ -67,7 +69,7 @@ function nuvinha(){
     nuvem.depth = trex.depth;
     trex.depth = trex.depth + 1;
     nuvem.depth = chao.depth - 1;
-    nuvem.lifetime = 125;
+    nuvem.lifetime = larguraTela;
 
     nuvinhas.add(nuvem);
   }
@@ -78,7 +80,7 @@ function preload() {
   trexCorrendo = loadAnimation("trex1.png", "trex3.png", "trex4.png");
   trexDoido = loadAnimation("trex_collided.png")
 
-  imagemDoChao = loadImage("ground2.png");
+  imagemDoChao = loadAnimation("ground2.png","ground2.png");
 
   nuvemImagem = loadImage("cloud.png");
 
@@ -100,7 +102,7 @@ function preload() {
 
 function setup() {
 
-  createCanvas(600,200);
+  createCanvas(larguraTela,200);
   
   trex = createSprite(50, 155, 20, 40);
   trex.addAnimation("correndo", trexCorrendo);
@@ -110,17 +112,17 @@ function setup() {
   trex.setCollider("circle",0,0,40);
 
   chao = createSprite(300, 190, 600, 20);
-  chao.addImage("chaosin",imagemDoChao);
+  chao.addAnimation("chaosin",imagemDoChao);
 
   chaoInvisivel = createSprite(300,200,600,19);
   chaoInvisivel.visible = false;
 
-  restart = createSprite(300,100,40,40);
+  restart = createSprite(larguraTela/2,100,40,40);
   restart.addImage("jogarDenovo",imagemDoRestart);
   restart.scale = 0.4;
   restart.visible = false;
 
-  gameOver = createSprite(300,55,60,30);
+  gameOver = createSprite(larguraTela/2,55,60,30);
   gameOver.addImage("perdeu",imagemDoGameOver);
   gameOver.scale = 0.5;
   gameOver.visible = false;
@@ -131,12 +133,12 @@ function setup() {
 
 function draw() {
   
-  background("white");
+  background("lightblue");
   
-  text("pontos = " + pontinhos,520,30);
+  text("pontos = " + pontinhos,larguraTela-150,30);
 
   if (estadoDoJogo === "jogando"){
-    if (chao.x <0){
+    if (chao.x <larguraTela-1000){
       chao.x = chao.width/2;
     }  
     

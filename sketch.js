@@ -142,9 +142,10 @@ function draw() {
       chao.x = chao.width/2;
     }  
     
-    if (keyDown("space") && trex.y >100) {
+    if ((keyDown("space") || touches.length >0)&& trex.y >100) {
       trex.velocityY = -5;
       pulin.play();
+      touches = [];
     }
     
     chao.velocityX = -(5+pontinhos/100);
@@ -174,8 +175,9 @@ function draw() {
     restart.visible = true;
     gameOver.visible = true;
     
-    if (mousePressedOver(restart)){
+    if (mousePressedOver(restart)  || touches.length >0){
         reset();
+        touches = [];
     }
   } 
 
